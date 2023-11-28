@@ -49,7 +49,7 @@ onMounted(() => {
 <template>
   <div class="relative">
     <nav class="fixed inset-x-0 h-20 bg-cyan-50 z-50 shadow-lg
-      flex flex-col justify-center">
+      px-4 flex flex-col justify-center">
       <div class="mx-auto max-w-7xl w-full flex items-center justify-between">
         <!-- Logo -->
         <div>

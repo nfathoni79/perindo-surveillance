@@ -37,7 +37,13 @@ export default {
     setToken()
     return apiClient.get('api/user/myprofile/')
   },
-  getUsersWithPositions: () => {
-    return apiClient.get('api/vsat/users/positions/')
+  getUsers: () => {
+    return apiClient.get('api/vsat/users/')
+  },
+  getDevices: () => {
+    return apiClient.get('api/vsat/devices/')
+  },
+  getUsersWithPositions: (userId, deviceId, date) => {
+    return apiClient.get(`api/vsat/users/positions/?user_id=${userId}&device_id=${deviceId}&date=${date}`)
   },
 }
