@@ -1,25 +1,30 @@
 import { createWebHistory, createRouter } from 'vue-router'
 import Base from '../views/Base.vue'
-import Login from '../views/Login.vue'
 import Home from '../views/Home.vue'
+import Map from '../views/Map.vue'
+import Cctv from '../views/Cctv.vue'
+import Login from '../views/Login.vue'
 import NotFound from '../views/NotFound.vue'
 
 import FishonService from '../services/FishonService'
 
 /**
- * Check if user is logged in or not.
- * @returns {boolean} True if user is logged in
+ * Check if user is logged in or not before entering a route.
+ * @param {*} to - Target route.
+ * @param {*} from - Current route.
+ * @param {*} next - Function to pass the next route.
  */
-const isUserLoggedIn = async () => {
+const checkIfAuthed = async (to, from, next) => {
   if (localStorage.getItem('fishonToken') == null) {
-    return false
+    next({ name: 'login' })
+    return
   }
 
   try {
     await FishonService.getCurrentUser()
-    return true
+    next()
   } catch (error) {
-    return false
+    next({ name: 'login' })
   }
 }
 
@@ -28,18 +33,23 @@ const routes = [
     path: '/',
     name: 'base',
     component: Base,
-    beforeEnter: async (to, from, next) => {
-      if (await isUserLoggedIn()) {
-        next()
-      } else {
-        next({ name: 'login' })
-      }
-    },
     children: [
       {
         path: '',
         name: 'home',
         component: Home,
+      },
+      {
+        path: 'map',
+        name: 'map',
+        component: Map,
+        beforeEnter : checkIfAuthed,
+      },
+      {
+        path: 'cctv',
+        name: 'cctv',
+        component: Cctv,
+        beforeEnter : checkIfAuthed,
       },
     ],
   },
