@@ -17,6 +17,7 @@ const user = ref(null)
 const navs = [
   { name: 'Map', routeName: 'map' },
   { name: 'CCTV', routeName: 'cctv' },
+  { name: 'CCTV Online', routeName: 'cctvonline' },
 ]
 
 onMounted(() => {
@@ -49,7 +50,7 @@ onMounted(() => {
  * @param {string} routeName - Nav route name.
  */
  const isMenuActive = (routeName) => {
-  return route.name.startsWith(routeName)
+  return route.name == routeName
 }
 
 /**
